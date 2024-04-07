@@ -4,16 +4,13 @@ import { Link } from "react-router-dom";
 import "../css/form.css";
 
 const Login = ({ setIsLoggedin }) => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
   const handleForm = (event) => {
     event.preventDefault();
     setError(false);
-
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
 
     if (!email || !password) {
       setError("Please enter email and password");
@@ -43,21 +40,23 @@ const Login = ({ setIsLoggedin }) => {
   };
 
   return (
-    <main>
+    <main className="login-main">
       <div className="form-wrapper">
         <div className="title-wraper">
           <h1>Welcome back</h1>
           <p>Login to continue</p>
         </div>
-        <form onSubmit={handleForm}>
+        <form onSubmit={handleForm} className="login-form">
           <div className="input-wrapper">
             <label htmlFor="email">Email</label>
             <input
               className={error ? "error-input" : ""}
               type="email"
-              ref={emailRef}
               id="email"
-              onChange={() => setError(false)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError(false);
+              }}
             />
           </div>
           <div className="input-wrapper">
@@ -65,9 +64,11 @@ const Login = ({ setIsLoggedin }) => {
             <input
               className={error ? "error-input" : ""}
               type="password"
-              ref={passwordRef}
               id="password"
-              onChange={() => setError(false)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError(false);
+              }}
             />
           </div>
           {error && <p className="error">{error}</p>}

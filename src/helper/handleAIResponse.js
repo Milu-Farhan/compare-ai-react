@@ -1,0 +1,52 @@
+import { isJSON } from "../utils";
+
+const handleAIResponse = async (
+  prompt,
+  AiModel,
+  setAiModelAnswer,
+  setAiModelMoreDetails,
+  setIsLoggedin
+) => {
+  setAiModelAnswer("");
+  setAiModelMoreDetails("");
+
+  const headers = {
+    Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    Accept: "application/json, text/plain, */*",
+    "Content-Type": "application/json",
+  };
+
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/models/${AiModel}`,
+    {
+      method: "post",
+      headers: headers,
+      body: JSON.stringify({ prompt: prompt }),
+    }
+  );
+
+  if (response.status == 401) {
+    alert("Authentication failed. Logging out ....");
+    setIsLoggedin(false);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  const loopRunner = true;
+
+  while (loopRunner) {
+    const { value, done } = await reader.read();
+    if (done) {
+      break;
+    }
+    const decodedChunk = decoder.decode(value, { stream: true });
+    if (isJSON(decodedChunk)) {
+      const parsedJSON = JSON.parse(decodedChunk);
+      setAiModelMoreDetails(parsedJSON);
+    } else {
+      setAiModelAnswer((answer) => answer + decodedChunk);
+    }
+  }
+};
+
+export default handleAIResponse;

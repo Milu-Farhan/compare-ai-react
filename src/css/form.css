@@ -1,4 +1,4 @@
-main {
+.login-main {
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -31,7 +31,7 @@ a {
   line-height: 1.3;
 }
 
-form {
+.login-form {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,7 +56,7 @@ form {
   border-radius: 4px;
 }
 
-button {
+.input-wrapper button {
   padding: 10px 1rem;
   border: none;
   background: #135d66;
@@ -67,7 +67,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.input-wrapper button:hover {
   background: #0a434b;
 }
 

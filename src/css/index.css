@@ -8,3 +8,11 @@
 a {
   text-decoration: none;
 }
+
+body {
+  background: #eee;
+}
+
+textarea {
+  resize: none;
+}

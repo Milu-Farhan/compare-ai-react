@@ -4,19 +4,16 @@ import { Link, useNavigate } from "react-router-dom";
 const Signup = () => {
   const navigate = useNavigate();
 
-  const nameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
   const handleForm = (event) => {
     event.preventDefault();
-
-    const name = nameRef.current.value;
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
 
     if (!name) setNameError("Enter your name");
     if (!email) setEmailError("Enter your email address");
@@ -39,7 +36,6 @@ const Signup = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
         if (!res.success) {
           res.errorMessage.name && setNameError(res.errorMessage.name);
           res.errorMessage.email && setEmailError(res.errorMessage.email);
@@ -60,15 +56,17 @@ const Signup = () => {
           <h1>Welcome </h1>
           <p>Create your account in simple steps</p>
         </div>
-        <form onSubmit={handleForm}>
+        <form onSubmit={handleForm} className="login-form">
           <div className="input-wrapper">
             <label htmlFor="username">Name</label>
             <input
               className={nameError ? "error-input" : ""}
               type="text"
-              ref={nameRef}
               id="username"
-              onChange={() => setNameError(false)}
+              onChange={(e) => {
+                setNameError(false);
+                setName(e.target.value);
+              }}
             />
             {nameError && <p className="error">{nameError}</p>}
           </div>
@@ -77,9 +75,11 @@ const Signup = () => {
             <input
               className={emailError ? "error-input" : ""}
               type="email"
-              ref={emailRef}
               id="email"
-              onChange={() => setEmailError(false)}
+              onChange={(e) => {
+                setEmailError(false);
+                setEmail(e.target.value);
+              }}
             />
             {emailError && <p className="error">{emailError}</p>}
           </div>
@@ -88,9 +88,11 @@ const Signup = () => {
             <input
               className={passwordError ? "error-input" : ""}
               type="password"
-              ref={passwordRef}
               id="password"
-              onChange={() => setPasswordError(false)}
+              onChange={(e) => {
+                setPasswordError(false);
+                setPassword(e.target.value);
+              }}
             />
             {passwordError && <p className="error">{passwordError}</p>}
           </div>
