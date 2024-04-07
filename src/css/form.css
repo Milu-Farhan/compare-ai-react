@@ -54,6 +54,28 @@
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 100%;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .eye-icon-span {
+  position: absolute;
+  top: 7px;
+  right: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.password-wrapper svg {
+  width: 25px;
+  height: 25px;
+}
+
+#password {
+  padding-right: 2.5rem;
 }
 
 .login-form button {

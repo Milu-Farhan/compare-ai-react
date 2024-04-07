@@ -1,23 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import AiModalBox from "../components/AiModalBox";
 import Navbar from "../components/Navbar";
 import PromptForm from "../components/PromptForm";
 import handleAIResponse from "../helper/handleAIResponse";
 import fetchModelsInfo from "../helper/fetchModelsInfo";
-
+import HowToStart from "../components/HowToStart";
 import "../css/main.css";
 
 const Compare = ({ setIsLoggedin }) => {
   const [firstAiModel, setFirstAiModel] = useState("");
-  const [firstAiModelAnswer, setFirstAiModelAnswer] = useState("");
-  const [secondAiModelAnswer, setSecondAiModelAnswer] = useState("");
-  const [firstAiModelResponse, setFirstAiModelResponse] = useState({});
+  const [firstAiModelResponse, setFirstAiModelResponse] = useState("");
+  const [firstAiModelMetrics, setFirstAiModelMetrics] = useState({});
   const [secondAiModel, setSecondAiModel] = useState("");
-  const [secondAiModelResponse, setSecondAiModelResponse] = useState({});
+  const [secondAiModelResponse, setSecondAiModelResponse] = useState("");
+  const [secondAiModelMetrics, setSecondAiModelMetrics] = useState({});
   const [models, setModels] = useState([]);
   const [prompt, setPrompt] = useState("");
-  const containerRef = useRef(null);
 
   useEffect(() => {
     fetchModelsInfo(setModels, setIsLoggedin);
@@ -40,16 +39,16 @@ const Compare = ({ setIsLoggedin }) => {
         prompt,
         uuid,
         firstAiModel,
-        setFirstAiModelAnswer,
         setFirstAiModelResponse,
+        setFirstAiModelMetrics,
         setIsLoggedin
       ),
       handleAIResponse(
         prompt,
         uuid,
         secondAiModel,
-        setSecondAiModelAnswer,
         setSecondAiModelResponse,
+        setSecondAiModelMetrics,
         setIsLoggedin
       ),
     ]);
@@ -65,24 +64,25 @@ const Compare = ({ setIsLoggedin }) => {
           prompt={prompt}
           setPrompt={setPrompt}
         />
-        <div className="grid" ref={containerRef}>
+        {!firstAiModel && !secondAiModel ? HowToStart : ""}
+        <div className="grid">
           <AiModalBox
             models={models}
             selectedAiModel={firstAiModel}
             setAiModel={setFirstAiModel}
-            answer={firstAiModelAnswer}
-            otherDetails={firstAiModelResponse}
-            setAnswer={setFirstAiModelAnswer}
-            setOtherDetails={setFirstAiModelResponse}
+            response={firstAiModelResponse}
+            metrics={firstAiModelMetrics}
+            setResponse={setFirstAiModelResponse}
+            setMetrics={setFirstAiModelMetrics}
           />
           <AiModalBox
             models={models}
             selectedAiModel={secondAiModel}
             setAiModel={setSecondAiModel}
-            answer={secondAiModelAnswer}
-            otherDetails={secondAiModelResponse}
-            setAnswer={setSecondAiModelAnswer}
-            setOtherDetails={setSecondAiModelResponse}
+            response={secondAiModelResponse}
+            metrics={secondAiModelMetrics}
+            setResponse={setSecondAiModelResponse}
+            setMetrics={setSecondAiModelMetrics}
           />
         </div>
       </main>

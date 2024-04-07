@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import handelLogin from "../helper/handleLogin";
-
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import "../css/form.css";
 
 const Login = ({ setIsLoggedin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleForm = async (event) => {
     event.preventDefault();
@@ -43,19 +44,32 @@ const Login = ({ setIsLoggedin }) => {
                 setEmail(e.target.value);
                 setError(false);
               }}
+              placeholder="Enter your e-mail address"
             />
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
-            <input
-              className={error ? "error-input" : ""}
-              type="password"
-              id="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setError(false);
-              }}
-            />
+            <div className="password-wrapper">
+              <input
+                className={error ? "error-input" : ""}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setError(false);
+                }}
+                placeholder="Enter your password"
+              />
+              <span
+                onClick={() => {
+                  setShowPassword((prev) => !prev);
+                }}
+                className="eye-icon-span"
+                style={{ display: !password ? "none" : "" }}
+              >
+                {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
+              </span>
+            </div>
           </div>
           {error && <p className="error">{error}</p>}
           <button type="submit">Login</button>

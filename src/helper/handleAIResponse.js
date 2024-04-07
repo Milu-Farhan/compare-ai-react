@@ -1,4 +1,10 @@
 import { isJSON } from "../utils";
+const scrollDown = () => {
+  window.scrollTo({
+    top: document.documentElement.scrollHeight,
+    behavior: "smooth",
+  });
+};
 
 const handleAIResponse = async (
   prompt,
@@ -6,7 +12,8 @@ const handleAIResponse = async (
   AiModel,
   setAiModelAnswer,
   setAiModelMoreDetails,
-  setIsLoggedin
+  setIsLoggedin,
+  containerRef
 ) => {
   setAiModelAnswer("");
   setAiModelMoreDetails("");
@@ -34,6 +41,7 @@ const handleAIResponse = async (
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   const loopRunner = true;
+  let timeoutId = null;
 
   while (loopRunner) {
     const { value, done } = await reader.read();
@@ -46,6 +54,13 @@ const handleAIResponse = async (
       setAiModelMoreDetails(parsedJSON);
     } else {
       setAiModelAnswer((answer) => answer + decodedChunk);
+    }
+
+    if (!timeoutId) {
+      timeoutId = setTimeout(() => {
+        scrollDown();
+        timeoutId = null;
+      }, 100);
     }
   }
 };

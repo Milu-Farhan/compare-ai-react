@@ -171,7 +171,7 @@ nav {
 
 .response-wrapper {
   padding: 1rem;
-  border: 3px solid #666;
+  border: 2px solid #666;
   border-radius: 8px;
   max-height: 70vh;
   height: 70vh;
@@ -295,3 +295,40 @@ nav {
 .history .response-wrapper {
   min-height: fit-content;
 }
+
+.compare-intro-wrapper {
+  list-style-position: inside;
+  background: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  padding: 1rem;
+}
+
+.choose-model-info,
+.no-history {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  color: #aaa;
+}
+
+.choose-model-info svg,
+.no-history svg {
+  width: 100px;
+  height: 100px;
+}
+
+/* .no-history {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2rem;
+  color: #aaa;
+} */
