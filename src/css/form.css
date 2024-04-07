@@ -9,7 +9,7 @@
   background-size: cover;
 }
 
-a {
+.login-main a {
   color: #135d66;
   font-weight: 500;
 }
@@ -56,7 +56,7 @@ a {
   border-radius: 4px;
 }
 
-.input-wrapper button {
+.login-form button {
   padding: 10px 1rem;
   border: none;
   background: #135d66;
@@ -67,7 +67,7 @@ a {
   cursor: pointer;
 }
 
-.input-wrapper button:hover {
+.login-form button:hover {
   background: #0a434b;
 }
 

@@ -1,7 +1,8 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import Compare from "./pages/Compare";
+import History from "./pages/History";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -19,10 +20,17 @@ function App() {
           path="/"
           element={
             isLoggedin ? (
-              <Dashboard
-                isLoggedin={isLoggedin}
-                setIsLoggedin={setIsLoggedin}
-              />
+              <Compare isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            isLoggedin ? (
+              <History isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
             ) : (
               <Navigate to="/login" />
             )

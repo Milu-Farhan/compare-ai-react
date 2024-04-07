@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import AiModalBox from "../components/AiModalBox";
 import Navbar from "../components/Navbar";
 import PromptForm from "../components/PromptForm";
@@ -7,7 +6,7 @@ import handleAIResponse from "../helper/handleAIResponse";
 import fetchModelsInfo from "../helper/fetchModelsInfo";
 import "../css/dashboard.css";
 
-const Dashboard = ({ setIsLoggedin }) => {
+const Compare = ({ setIsLoggedin }) => {
   const [firstAiModel, setFirstAiModel] = useState("");
   const [firstAiModelAnswer, setFirstAiModelAnswer] = useState("");
   const [secondAiModelAnswer, setSecondAiModelAnswer] = useState("");
@@ -16,7 +15,7 @@ const Dashboard = ({ setIsLoggedin }) => {
   const [secondAiModelResponse, setSecondAiModelResponse] = useState({});
   const [models, setModels] = useState([]);
   const [prompt, setPrompt] = useState("");
-
+  const containerRef = useRef(null);
   useEffect(() => {
     fetchModelsInfo(setModels, setIsLoggedin);
   }, []);
@@ -46,6 +45,8 @@ const Dashboard = ({ setIsLoggedin }) => {
         setIsLoggedin
       ),
     ]);
+
+    scrollToBottom();
   };
 
   return (
@@ -58,20 +59,24 @@ const Dashboard = ({ setIsLoggedin }) => {
           prompt={prompt}
           setPrompt={setPrompt}
         />
-        <div className="grid">
+        <div className="grid" ref={containerRef}>
           <AiModalBox
             models={models}
             selectedAiModel={firstAiModel}
             setAiModel={setFirstAiModel}
-            response={firstAiModelResponse}
             answer={firstAiModelAnswer}
+            otherDetails={firstAiModelResponse}
+            setAnswer={setFirstAiModelAnswer}
+            setOtherDetails={setFirstAiModelResponse}
           />
           <AiModalBox
             models={models}
             selectedAiModel={secondAiModel}
             setAiModel={setSecondAiModel}
-            response={secondAiModelResponse}
             answer={secondAiModelAnswer}
+            otherDetails={secondAiModelResponse}
+            setAnswer={setSecondAiModelAnswer}
+            setOtherDetails={setSecondAiModelResponse}
           />
         </div>
       </main>
@@ -79,4 +84,4 @@ const Dashboard = ({ setIsLoggedin }) => {
   );
 };
 
-export default Dashboard;
+export default Compare;

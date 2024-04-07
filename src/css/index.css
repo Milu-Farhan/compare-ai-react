@@ -9,6 +9,13 @@ a {
   text-decoration: none;
 }
 
+a:focus,
+a:active,
+a:hover,
+a {
+  color: unset;
+}
+
 body {
   background: #eee;
 }

@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import handelLogin from "../helper/handleLogin";
 
 import "../css/form.css";
 
@@ -8,35 +9,20 @@ const Login = ({ setIsLoggedin }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
 
-  const handleForm = (event) => {
+  const handleForm = async (event) => {
     event.preventDefault();
     setError(false);
 
-    if (!email || !password) {
-      setError("Please enter email and password");
-      return;
-    }
+    const result = await handelLogin({ email, password }, setError);
 
-    fetch(`${import.meta.env.VITE_BASE_URL}/api/user/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.success) {
-          setError(res.errorMessage);
-        }
-        if (res.success) {
-          setIsLoggedin(true);
-          localStorage.setItem("access_token", res.data.access_token);
-        }
-      });
+    if (result.success) {
+      setIsLoggedin(true);
+      localStorage.setItem("access_token", result.data.access_token);
+      localStorage.setItem(
+        "user_details",
+        JSON.stringify(result.data.user_details)
+      );
+    }
   };
 
   return (

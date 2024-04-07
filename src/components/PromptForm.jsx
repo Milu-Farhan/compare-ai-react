@@ -1,15 +1,17 @@
 const PromptForm = ({ setPrompt, prompt, onSubmitHandler }) => {
   return (
     <form className="prompt-form" onSubmit={onSubmitHandler}>
-      <textarea
+      <input
         name="prompt"
         id="prompt"
-        rows="2"
+        type="text"
         placeholder="Enter your prompt here"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-      ></textarea>
-      <button className="send-btn">Send</button>
+      />
+      <button className="send-btn" type="submit">
+        Compare
+      </button>
     </form>
   );
 };

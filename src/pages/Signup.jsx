@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import handleSignup from "../helper/handleSingup";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -8,49 +9,27 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [nameError, setNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  const handleForm = (event) => {
+  const handleForm = async (event) => {
     event.preventDefault();
+    const result = await handleSignup(
+      { name, email, password },
+      setNameError,
+      setEmailError,
+      setPasswordError
+    );
 
-    if (!name) setNameError("Enter your name");
-    if (!email) setEmailError("Enter your email address");
-    if (!password) setPasswordError("Enter a valid password");
-
-    if (nameError || emailError || passwordError) {
-      return;
+    if (result && result.success) {
+      alert("Account crated successfully");
+      navigate("/login");
     }
-
-    fetch(`${import.meta.env.VITE_BASE_URL}/api/user/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.success) {
-          res.errorMessage.name && setNameError(res.errorMessage.name);
-          res.errorMessage.email && setEmailError(res.errorMessage.email);
-          res.errorMessage.password &&
-            setPasswordError(res.errorMessage.password);
-        }
-        if (res.success) {
-          alert("Account crated successfully");
-          navigate("/login");
-        }
-      });
   };
 
   return (
-    <main>
+    <main className="login-main ">
       <div className="form-wrapper">
         <div className="title-wraper">
           <h1>Welcome </h1>
