@@ -64,7 +64,7 @@ const Compare = ({ setIsLoggedin }) => {
           prompt={prompt}
           setPrompt={setPrompt}
         />
-        {!firstAiModel && !secondAiModel ? HowToStart : ""}
+        {!firstAiModel && !secondAiModel ? <HowToStart /> : ""}
         <div className="grid">
           <AiModalBox
             models={models}
