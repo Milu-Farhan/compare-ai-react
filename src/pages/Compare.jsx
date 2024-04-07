@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import AiModalBox from "../components/AiModalBox";
 import Navbar from "../components/Navbar";
 import PromptForm from "../components/PromptForm";
 import handleAIResponse from "../helper/handleAIResponse";
 import fetchModelsInfo from "../helper/fetchModelsInfo";
-import "../css/dashboard.css";
+
+import "../css/main.css";
 
 const Compare = ({ setIsLoggedin }) => {
   const [firstAiModel, setFirstAiModel] = useState("");
@@ -16,12 +18,14 @@ const Compare = ({ setIsLoggedin }) => {
   const [models, setModels] = useState([]);
   const [prompt, setPrompt] = useState("");
   const containerRef = useRef(null);
+
   useEffect(() => {
     fetchModelsInfo(setModels, setIsLoggedin);
   }, []);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
     if (!prompt) {
       return alert("Please enter a prompt.");
     }
@@ -29,9 +33,12 @@ const Compare = ({ setIsLoggedin }) => {
     if (!firstAiModel || !secondAiModel || firstAiModel === secondAiModel)
       return alert("Please select two different AI models");
 
+    const uuid = uuidv4();
+
     await Promise.all([
       handleAIResponse(
         prompt,
+        uuid,
         firstAiModel,
         setFirstAiModelAnswer,
         setFirstAiModelResponse,
@@ -39,14 +46,13 @@ const Compare = ({ setIsLoggedin }) => {
       ),
       handleAIResponse(
         prompt,
+        uuid,
         secondAiModel,
         setSecondAiModelAnswer,
         setSecondAiModelResponse,
         setIsLoggedin
       ),
     ]);
-
-    scrollToBottom();
   };
 
   return (

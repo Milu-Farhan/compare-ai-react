@@ -17,6 +17,7 @@ function App() {
     <>
       <Routes>
         <Route
+          exact
           path="/"
           element={
             isLoggedin ? (
@@ -27,6 +28,7 @@ function App() {
           }
         />
         <Route
+          exact
           path="/history"
           element={
             isLoggedin ? (

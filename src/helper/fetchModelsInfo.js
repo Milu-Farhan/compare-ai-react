@@ -6,7 +6,7 @@ const fetchModelsInfo = (setModels, setIsLoggedin) => {
   fetch(`${import.meta.env.VITE_BASE_URL}/api/models`, { headers })
     .then((res) => {
       if (res.status == 401) {
-        setIsLoggedin(true);
+        setIsLoggedin(false);
       }
       return res.json();
     })

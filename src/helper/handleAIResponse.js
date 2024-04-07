@@ -2,6 +2,7 @@ import { isJSON } from "../utils";
 
 const handleAIResponse = async (
   prompt,
+  uuid,
   AiModel,
   setAiModelAnswer,
   setAiModelMoreDetails,
@@ -12,7 +13,7 @@ const handleAIResponse = async (
 
   const headers = {
     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-    Accept: "application/json, text/plain, */*",
+    Accept: "application/json, text/plain",
     "Content-Type": "application/json",
   };
 
@@ -21,7 +22,7 @@ const handleAIResponse = async (
     {
       method: "post",
       headers: headers,
-      body: JSON.stringify({ prompt: prompt }),
+      body: JSON.stringify({ prompt, uuid }),
     }
   );
 

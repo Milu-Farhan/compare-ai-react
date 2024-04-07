@@ -64,27 +64,15 @@ const AiModalBox = ({
           <div>
             <p>
               Input token:{" "}
-              <span className="highlight">
-                {otherDetails?.usage?.prompt_tokens}
-              </span>
-            </p>
-            <p>
-              Input token:{" "}
-              <span className="highlight">
-                {otherDetails?.usage?.prompt_tokens}
-              </span>
+              <span className="highlight">{otherDetails?.input_tokens}</span>
             </p>
             <p>
               Output token:{" "}
-              <span className="highlight">
-                {otherDetails?.usage?.completion_tokens}
-              </span>
+              <span className="highlight">{otherDetails?.output_tokens}</span>
             </p>
             <p>
               Total token:{" "}
-              <span className="highlight">
-                {otherDetails?.usage?.total_tokens}
-              </span>
+              <span className="highlight">{otherDetails?.total_tokens}</span>
             </p>
             <p>
               Cost: <span className="highlight">${otherDetails?.cost}</span>
@@ -96,7 +84,7 @@ const AiModalBox = ({
             <p>
               Time taken:{" "}
               <span className="highlight">
-                {(otherDetails?.duration / 1000).toFixed(2)}s
+                {(otherDetails?.time_taken / 1000).toFixed(2)}s
               </span>
             </p>
           </div>
