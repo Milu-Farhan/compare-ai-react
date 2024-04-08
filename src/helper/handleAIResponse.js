@@ -1,10 +1,4 @@
-import { isJSON } from "../utils";
-const scrollDown = () => {
-  window.scrollTo({
-    top: document.documentElement.scrollHeight,
-    behavior: "smooth",
-  });
-};
+import { isJSON, scrollDown } from "../utils";
 
 const handleAIResponse = async (
   prompt,
@@ -12,8 +6,7 @@ const handleAIResponse = async (
   AiModel,
   setAiModelAnswer,
   setAiModelMoreDetails,
-  setIsLoggedin,
-  containerRef
+  setIsLoggedin
 ) => {
   setAiModelAnswer("");
   setAiModelMoreDetails("");
