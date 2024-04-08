@@ -1,4 +1,4 @@
-const Metrics = ({ metrics }) => {
+const Metrics = ({ metrics, currency }) => {
   return (
     <div className="metrics-wrapper">
       <h4>Performance metrics</h4>
@@ -16,10 +16,11 @@ const Metrics = ({ metrics }) => {
           <span className="highlight">{metrics?.total_tokens}</span>
         </p>
         <p>
-          Cost: <span className="highlight">${metrics?.cost}</span>
+          Cost:{" "}
+          <span className="highlight">{metrics?.cost + " " + currency}</span>
         </p>
         <p>
-          Latency: <span className="highlight">{metrics?.latency}ms</span>
+          Latency: <span className="highlight">{metrics?.latency}s</span>
         </p>
         <p>
           Time taken:{" "}

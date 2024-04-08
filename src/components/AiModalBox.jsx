@@ -44,7 +44,14 @@ const AiModalBox = ({
 
       {response && <AiResponse response={response} />}
 
-      {Object.keys(metrics).length ? <Metrics metrics={metrics} /> : ""}
+      {Object.keys(metrics).length ? (
+        <Metrics
+          metrics={metrics}
+          currency={selectedModelContent.input_cost[0].currency}
+        />
+      ) : (
+        ""
+      )}
     </section>
   );
 };
